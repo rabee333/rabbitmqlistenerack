@@ -8,6 +8,7 @@ The following environment variables need to be passed to the container:
 ### ACK Logging
 ```
 ENV TEAMNAME=[YourTeamName]
+ENV CHALLENGEAPPINSIGHTS_KEY=[Challenge Application Insights Key] //Given by the proctors
 ```
 ### For RabbitMQ
 ```
