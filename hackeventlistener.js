@@ -30,7 +30,7 @@ if (process.env.TEAMNAME.length == 0) {
 // Start
 var connectionString = process.env.AMQPURL;
 var processendpoint = process.env.PROCESSENDPOINT;
-var insightsKey = '23c6b1ec-ca92-4083-86b6-eba851af9032';
+var insightsKey = process.env.CHALLENGEAPPINSIGHTS_KEY;
 var teamname = process.env.TEAMNAME;
 var amqpConn = null;
 
