@@ -144,7 +144,8 @@ function startWorker() {
                     properties: {
                       team: teamname,
                       challenge: "4-eventlistener",
-                      type: "rabbitmq"
+                      type: "rabbitmq",
+                      service: "rabbitmqlistener"
                     }
                   });
             } catch (e) {
