@@ -145,7 +145,8 @@ function startWorker() {
                       team: teamname,
                       challenge: "4-eventlistener",
                       type: "rabbitmq",
-                      service: "rabbitmqlistener"
+                      service: "rabbitmqlistener",
+                      orderId: orderId
                     }
                   });
             } catch (e) {
