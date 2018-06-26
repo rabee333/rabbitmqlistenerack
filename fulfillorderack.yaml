@@ -1,0 +1,50 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: fulfillorderack
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: fulfillorderack
+    spec:
+      volumes:
+      - name: orderstoragehack
+        azureFile:
+          secretName: azure-secret
+          shareName: aksshare
+          readOnly: false
+      containers:
+      - name: fulfillorderack
+        image: torosent/fulfillorderack
+        ports:
+        - containerPort: 8080
+          name: fulfillorderack
+        volumeMounts:
+        - mountPath: "/orders"
+          name: orderstoragehack
+        env:
+        - name: TEAMNAME
+          value: "G1"
+        - name: APPINSIGHTS_KEY
+          value: "dd7fd93b-31c3-43ed-b40f-068eef035ceb"
+        - name: CHALLENGEAPPINSIGHTS_KEY
+          value: "534fd36c-889c-4cce-977a-49ccd6d6e5cf"
+        - name: MONGOURL
+          valueFrom:
+            secretKeyRef:
+              name: kuberneteschallenge
+              key: mongodb
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fulfillorderack
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: fulfillorderack
