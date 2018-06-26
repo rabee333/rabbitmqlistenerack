@@ -18,3 +18,5 @@ ENV AMQPURL=amqp://[url]l:5672
 ```
 ENV PROCESSENDPOINT=http://fulfillorder.[namespace].svc.cluster.local:8080/v1/order/
 ```
+
+Bye!
