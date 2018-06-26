@@ -1,0 +1,46 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: captureorder
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: captureorder
+    spec:
+      containers:
+      - name: captureorder
+        image: torosent/captureorderack
+        ports:
+        - containerPort: 8080
+          name: captureorder
+        env:
+        - name: TEAMNAME
+          value: "G1"
+        - name: APPINSIGHTS_KEY
+          value: "dd7fd93b-31c3-43ed-b40f-068eef035ceb"
+        - name: CHALLENGEAPPINSIGHTS_KEY
+          value: "534fd36c-889c-4cce-977a-49ccd6d6e5cf"
+        - name: MONGOURL
+          valueFrom:
+            secretKeyRef:
+              name: kuberneteschallenge
+              key: mongodb
+        - name: AMQPURL
+          valueFrom:
+            secretKeyRef:
+              name: kuberneteschallenge
+              key: rabbitmq
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: captureorder
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    app: captureorder
