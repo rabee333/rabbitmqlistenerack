@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: rbtmqlistener2
-        image: acreg1.azurecr.io/rabbitmqlistenerack:latest
+        image: acreg1.azurecr.io/rabbitmqlistenerack:${BUILD_NUMBER}
         ports:
         - containerPort: 8080
           name: rbtmqlistener2
