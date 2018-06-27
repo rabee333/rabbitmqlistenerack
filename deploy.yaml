@@ -1,0 +1,46 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: rbtmqlistener2
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: rbtmqlistener2
+    spec:
+      containers:
+      - name: rbtmqlistener2
+        image: torosent/rabbitmqlistenerack
+        ports:
+        - containerPort: 8080
+          name: rbtmqlistener2
+        env:
+        - name: TEAMNAME
+          value: "G1"
+        - name: APPINSIGHTS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: kuberneteschallenge2
+              key: appinsights
+        - name: CHALLENGEAPPINSIGHTS_KEY
+          value: "534fd36c-889c-4cce-977a-49ccd6d6e5cf"
+        - name: PROCESSENDPOINT
+          value: "http://fulfilorderk2:8080/v1/order"
+        - name: AMQPURL
+          valueFrom:
+            secretKeyRef:
+              name: kuberneteschallenge
+              key: rabbitmq
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rbtmqlistener2
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    app: rbtmqlistener2
