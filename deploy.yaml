@@ -30,7 +30,7 @@ spec:
         - name: AMQPURL
           valueFrom:
             secretKeyRef:
-              name: kuberneteschallenge
+              name: kuberneteschallenge2
               key: rabbitmq
       imagePullSecrets:
       - name: cred
